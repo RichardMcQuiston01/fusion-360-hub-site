@@ -1,0 +1,20 @@
+---
+interface Props {
+  storeUrl: string | null;
+}
+
+const { storeUrl } = Astro.props;
+---
+
+{storeUrl ? (
+  <a
+    href={storeUrl}
+    class="inline-block rounded bg-slate-900 px-4 py-2 text-white hover:bg-slate-700"
+  >
+    Get it on the Autodesk App Store
+  </a>
+) : (
+  <span class="inline-block rounded border border-slate-300 px-4 py-2 text-slate-600">
+    Coming soon to the Autodesk App Store
+  </span>
+)}

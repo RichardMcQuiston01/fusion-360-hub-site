@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { addins } from '../data/addins';
+---
+
+<BaseLayout title="Fusion 360 Generators">
+  <h1 class="text-3xl font-bold text-slate-900">Fusion 360 Generators</h1>
+  <p class="mt-3 max-w-2xl text-lg text-slate-600">
+    Add-ins for Autodesk Fusion that draw ready-to-cut sketches for laser
+    cutters, CNC routers and 3D printers. Windows only for now.
+  </p>
+  <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+    {addins.map((addin) => (
+      <li class="rounded border border-slate-200 p-5">
+        <h2 class="text-xl font-semibold text-slate-900">
+          <a class="hover:underline" href={`/addins/${addin.slug}`}>
+            {addin.name}
+          </a>
+        </h2>
+        <p class="mt-1 text-sm uppercase tracking-wide text-slate-500">
+          {addin.pricing === 'free' ? 'Free' : 'Paid'}
+        </p>
+        <p class="mt-2 text-slate-600">{addin.tagline}</p>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
