@@ -45,9 +45,12 @@ to the `fusion360` folder to keep that acceptable.
   input borders use `border-control`, not `border-border`. Keep a visible focus
   outline, underline links in text, give every control a label, keep targets at
   least 24 by 24 px, and respect reduced motion.
-- The catalog view lives in `src/components/catalog` and `src/scripts/catalog.ts`.
-  It is data-driven (`src/lib/catalog.ts`) and meant to move into the
-  `catalog-component` NPM package. Keep it free of add-in specifics.
+- The catalog view comes from the NPM package
+  `@richardmcquiston01/custom-catalog-component` (repo
+  `RichardMcQuiston01/catalog-component`). `src/components/Catalog.astro` renders
+  it, and `src/styles/global.css` imports its stylesheet and maps its `--cc-*`
+  variables to the site's tokens. Fix catalog behaviour in the package, not here,
+  then bump the version.
 - Check changes with axe-core and keyboard testing before merging, and test at
   320 px width.
 

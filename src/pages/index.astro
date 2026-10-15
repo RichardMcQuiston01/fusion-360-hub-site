@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import CatalogView from '../components/catalog/CatalogView.astro';
+import Catalog from '../components/Catalog.astro';
 import { addins, groups } from '../data/addins';
-import type { CatalogItem } from '../lib/catalog';
+import type { CatalogItem } from '@richardmcquiston01/custom-catalog-component';
 
 const items: CatalogItem[] = addins.map((addin) => ({
   id: addin.slug,
@@ -29,7 +29,7 @@ const items: CatalogItem[] = addins.map((addin) => ({
     cutters, CNC routers and 3D printers. Windows only for now.
   </p>
   <div class="mt-10">
-    <CatalogView
+    <Catalog
       items={items}
       groups={groups}
       facets={[
