@@ -1,0 +1,46 @@
+name: Deploy
+
+# Builds the site and uploads it to the fusion360 folder on Hostinger.
+# Runs on every push to main, and can be started by hand from the Actions tab.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Never run two deploys at once, and never cancel one halfway through.
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build
+        run: bun run build
+
+      - name: Upload to Hostinger
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          port: ${{ secrets.FTP_PORT }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASS }}
+          # Encrypted connection (explicit FTP over TLS). Use `ftp` only if the
+          # server cannot do TLS.
+          protocol: ftps
+          local-dir: ./dist/
+          # Must end with a slash, for example /public_html/fusion360/
+          server-dir: ${{ secrets.FTP_FOLDER_PATH }}
