@@ -29,10 +29,12 @@ Package manager is Bun.
 ## Deployment
 
 `.github/workflows/deploy.yml` builds the site and uploads `dist/` to the
-`fusion360` folder on Hostinger over FTPS whenever `main` changes (or when run by
+`fusion360` folder on Hostinger over plain FTP whenever `main` changes (or when run by
 hand from the Actions tab). It uses the repository secrets `FTP_SERVER`,
 `FTP_PORT`, `FTP_USERNAME`, `FTP_PASS` and `FTP_FOLDER_PATH`. Never commit
-credentials, and never deploy from a branch other than `main`.
+credentials, and never deploy from a branch other than `main`. The server does
+not support FTPS, so the connection is unencrypted; the FTP account is limited
+to the `fusion360` folder to keep that acceptable.
 
 ## Content rules
 
