@@ -34,21 +34,28 @@ const jsonLd = {
   description={addin.tagline}
   jsonLd={jsonLd}
 >
-  <nav aria-label="Breadcrumb" class="text-sm">
+  <button
+    type="button"
+    id="go-back"
+    class="rounded-md border border-control bg-surface px-4 py-2 font-medium text-ink hover:bg-accent-tint"
+  >
+    &larr; Go Back
+  </button>
+  <noscript>
     <a class="underline" href="/">
       &larr; Back to all add-ins
     </a>
-    <span class="text-muted" aria-hidden="true">
-      {' '}
-      /{' '}
-    </span>
+  </noscript>
+  <h1 class="mt-6 text-4xl text-ink">{addin.name}</h1>
+  <p class="mt-2 text-muted">
+    <span class="font-semibold text-ink">Category:</span>{' '}
     <a class="underline" href={`/#${group.slug}`}>
       {group.name}
     </a>
-  </nav>
-  <h1 class="mt-4 text-4xl text-ink">{addin.name}</h1>
-  <p class="mt-1 text-sm font-semibold uppercase tracking-wide text-muted">
-    {addin.pricing === 'free' ? 'Free, with no limitations' : 'Paid'}
+  </p>
+  <p class="mt-1 text-muted">
+    <span class="font-semibold text-ink">Price:</span>{' '}
+    {addin.pricing === 'free' ? 'Free' : 'Paid'}
   </p>
   <p class="mt-4 max-w-2xl text-lg text-muted">{addin.description}</p>
   <div class="mt-6">
@@ -92,3 +99,18 @@ const jsonLd = {
     </a>
   </p>
 </BaseLayout>
+
+<script>
+  // Go to the previous page when it was on this site; otherwise to the index.
+  const backButton = document.getElementById('go-back');
+  backButton?.addEventListener('click', () => {
+    const cameFromSite =
+      document.referrer !== '' &&
+      new URL(document.referrer).origin === window.location.origin;
+    if (cameFromSite && window.history.length > 1) {
+      window.history.back();
+    } else {
+      window.location.href = '/';
+    }
+  });
+</script>
