@@ -1,0 +1,181 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { addins } from '../data/addins';
+
+const contactEmail = 'fusion360@richardmcquiston.com';
+const subjects = ['General Inquiry', 'Product Support', 'Other'];
+const productSupportSubject = 'Product Support';
+const products = addins.map((addin) => addin.name);
+
+const fieldClass =
+  'mt-1 block w-full max-w-lg rounded-md border border-control bg-surface px-3 py-2 text-ink';
+---
+
+<BaseLayout title="Contact Us | Fusion 360 Generators">
+  <h1 class="text-4xl text-ink">Contact Us</h1>
+  <p class="mt-4 max-w-2xl">
+    Questions, bug reports and feature requests are welcome. Fill in the form
+    and open the link it builds to send us an email, or write directly to
+    <a class="underline" href={`mailto:${contactEmail}`}>
+      {contactEmail}
+    </a>
+    .
+  </p>
+
+  <form
+    id="contact-form"
+    class="mt-8 max-w-2xl space-y-6"
+    data-email={contactEmail}
+    data-product-support={productSupportSubject}
+  >
+    <div>
+      <label for="contact-subject" class="font-semibold text-ink">
+        Subject <span aria-hidden="true">*</span>
+        <span class="sr-only">(required)</span>
+      </label>
+      <select id="contact-subject" required class={fieldClass}>
+        <option value="">Choose a subject</option>
+        {subjects.map((subject) => (
+          <option value={subject}>{subject}</option>
+        ))}
+      </select>
+    </div>
+
+    <div id="contact-product-field" hidden>
+      <label for="contact-product" class="font-semibold text-ink">
+        Select Product <span class="font-normal text-muted">(optional)</span>
+      </label>
+      <select id="contact-product" class={fieldClass}>
+        <option value="">Not sure or not listed</option>
+        {products.map((product) => (
+          <option value={product}>{product}</option>
+        ))}
+      </select>
+    </div>
+
+    <div>
+      <label for="contact-fusion-version" class="font-semibold text-ink">
+        Fusion 360 Version
+        <span class="font-normal text-muted">(optional)</span>
+      </label>
+      <input
+        id="contact-fusion-version"
+        type="text"
+        autocomplete="off"
+        class={fieldClass}
+      />
+    </div>
+
+    <div>
+      <label for="contact-message" class="font-semibold text-ink">
+        Message Body <span class="font-normal text-muted">(optional)</span>
+      </label>
+      <textarea id="contact-message" rows="8" class={fieldClass}></textarea>
+    </div>
+
+    <div>
+      <a
+        id="contact-link"
+        role="link"
+        aria-disabled="true"
+        class="inline-block rounded-md bg-accent px-5 py-3 font-semibold text-white no-underline hover:bg-ink aria-disabled:cursor-not-allowed aria-disabled:bg-muted aria-disabled:hover:bg-muted"
+      >
+        Open email to send
+      </a>
+      <p id="contact-hint" class="mt-2 text-sm text-muted">
+        Choose a subject to build the link.
+      </p>
+    </div>
+  </form>
+
+  <noscript>
+    <p class="mt-6 max-w-2xl">
+      The form needs JavaScript. Please email
+      <a class="underline" href={`mailto:${contactEmail}`}>
+        {contactEmail}
+      </a>
+      instead.
+    </p>
+  </noscript>
+
+  <h2 class="mt-10 text-2xl text-ink">Before you write</h2>
+  <ul class="mt-2 list-disc space-y-1 pl-6">
+    <li>Say which add-in and which version you are using.</li>
+    <li>Say which version of Fusion you are using, and that it is Windows.</li>
+    <li>Describe the settings you used and what you expected to happen.</li>
+  </ul>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById(
+    'contact-form'
+  ) as HTMLFormElement | null;
+  const subjectSelect = document.getElementById(
+    'contact-subject'
+  ) as HTMLSelectElement;
+  const productField = document.getElementById('contact-product-field')!;
+  const productSelect = document.getElementById(
+    'contact-product'
+  ) as HTMLSelectElement;
+  const versionInput = document.getElementById(
+    'contact-fusion-version'
+  ) as HTMLInputElement;
+  const messageInput = document.getElementById(
+    'contact-message'
+  ) as HTMLTextAreaElement;
+  const link = document.getElementById('contact-link') as HTMLAnchorElement;
+  const hint = document.getElementById('contact-hint')!;
+
+  const lineBreak = '\r\n';
+
+  function buildMailto(): string | null {
+    const subject = subjectSelect.value;
+    if (!form || subject === '') {
+      return null;
+    }
+    const isProductSupport = subject === form.dataset.productSupport;
+    const product = isProductSupport ? productSelect.value : '';
+    const version = versionInput.value.trim();
+    const message = messageInput.value.trim();
+
+    const subjectLine = product ? `${subject}: ${product}` : subject;
+    const bodyLines: string[] = [];
+    if (product) {
+      bodyLines.push(`Product: ${product}`);
+    }
+    if (version) {
+      bodyLines.push(`Fusion 360 version: ${version}`);
+    }
+    if (message) {
+      if (bodyLines.length > 0) {
+        bodyLines.push('');
+      }
+      bodyLines.push(message);
+    }
+    const query = [
+      `subject=${encodeURIComponent(subjectLine)}`,
+      `body=${encodeURIComponent(bodyLines.join(lineBreak))}`,
+    ].join('&');
+    return `mailto:${form.dataset.email}?${query}`;
+  }
+
+  function update(): void {
+    productField.hidden = subjectSelect.value !== form?.dataset.productSupport;
+    const mailto = buildMailto();
+    if (mailto === null) {
+      link.removeAttribute('href');
+      link.setAttribute('aria-disabled', 'true');
+      hint.textContent = 'Choose a subject to build the link.';
+      return;
+    }
+    link.href = mailto;
+    link.removeAttribute('aria-disabled');
+    hint.textContent =
+      'Opens your email app with the message filled in. Nothing is sent until you send it.';
+  }
+
+  form?.addEventListener('input', update);
+  form?.addEventListener('change', update);
+  form?.addEventListener('submit', (event) => event.preventDefault());
+  update();
+</script>
