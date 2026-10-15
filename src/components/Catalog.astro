@@ -1,0 +1,20 @@
+---
+import {
+  renderCatalog,
+  type CatalogOptions,
+} from '@richardmcquiston01/custom-catalog-component';
+
+type Props = CatalogOptions;
+
+// The markup comes from the package, so it is complete before any JavaScript
+// runs. The script below adds searching, filtering, sorting and the view switch.
+const html = renderCatalog(Astro.props);
+---
+
+<Fragment set:html={html} />
+
+<script>
+  import { mountAllCatalogs } from '@richardmcquiston01/custom-catalog-component';
+
+  mountAllCatalogs();
+</script>

@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import '@richardmcquiston01/custom-catalog-component/styles.css';
 @import '@fontsource/inter/latin-400.css';
 @import '@fontsource/inter/latin-500.css';
 @import '@fontsource/inter/latin-600.css';
@@ -66,4 +67,17 @@
       animation-duration: 0.01ms !important;
     }
   }
+}
+
+/* Point the catalog component's colours and fonts at the site's tokens. */
+.cc-catalog {
+  --cc-surface: var(--color-surface);
+  --cc-ink: var(--color-ink);
+  --cc-muted: var(--color-muted);
+  --cc-accent: var(--color-accent);
+  --cc-accent-tint: var(--color-accent-tint);
+  --cc-border: var(--color-border);
+  --cc-control: var(--color-control);
+  --cc-focus: var(--color-focus);
+  --cc-font-heading: var(--font-heading);
 }
