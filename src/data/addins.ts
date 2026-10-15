@@ -1,6 +1,15 @@
 export type AddinPricing = 'free' | 'paid';
 
-export type GroupSlug = 'laser-cutting' | 'text-and-signs' | 'calibration';
+export type GroupSlug =
+  | 'laser-cutting'
+  | 'text-and-signs'
+  | 'games-and-puzzles'
+  | 'holidays'
+  | 'home-and-garden'
+  | 'organization'
+  | 'electronics'
+  | 'jewelry-and-accessories'
+  | 'calibration';
 
 export interface AddinGroup {
   slug: GroupSlug;
@@ -8,7 +17,10 @@ export interface AddinGroup {
   description: string;
 }
 
-/** Display order of the groups on the home page. Empty groups are not shown. */
+/**
+ * Display order of the groups on the home page. A group with no add-ins is not
+ * shown, so groups can be defined here before anything is assigned to them.
+ */
 export const groups: AddinGroup[] = [
   {
     slug: 'laser-cutting',
@@ -19,6 +31,36 @@ export const groups: AddinGroup[] = [
     slug: 'text-and-signs',
     name: 'Text and signs',
     description: 'Lettering, stencils and signs.',
+  },
+  {
+    slug: 'games-and-puzzles',
+    name: 'Games and puzzles',
+    description: 'Puzzles, game pieces and things to play with.',
+  },
+  {
+    slug: 'holidays',
+    name: 'Holidays',
+    description: 'Ornaments, decorations and seasonal pieces.',
+  },
+  {
+    slug: 'home-and-garden',
+    name: 'Home and garden',
+    description: 'Decor, plant markers and things for around the house.',
+  },
+  {
+    slug: 'organization',
+    name: 'Organization',
+    description: 'Trays, dividers and organizers.',
+  },
+  {
+    slug: 'electronics',
+    name: 'Electronics',
+    description: 'Stands, enclosures and mounts for devices.',
+  },
+  {
+    slug: 'jewelry-and-accessories',
+    name: 'Jewelry and accessories',
+    description: 'Earrings, tags, keychains and wearables.',
   },
   {
     slug: 'calibration',
