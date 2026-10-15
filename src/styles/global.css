@@ -1,1 +1,69 @@
 @import 'tailwindcss';
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/barlow-semi-condensed/latin-600.css';
+@import '@fontsource/barlow-semi-condensed/latin-700.css';
+
+/* Colours and fonts come from BRANDING.md. Every colour is defined once here
+   so a dark mode can later redefine these variables. */
+@theme {
+  --color-paper: #faf7f2;
+  --color-surface: #ffffff;
+  --color-ink: #2b2622;
+  --color-muted: #5c534b;
+  --color-accent: #a8400c;
+  --color-accent-tint: #fbe8db;
+  --color-border: #d9cfc3;
+  --color-control: #857a6e;
+  --color-focus: #1d4ed8;
+  --color-free: #14532d;
+  --color-free-tint: #dcfce7;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Barlow Semi Condensed', system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.5;
+    /* Let long words, such as email addresses, wrap on narrow screens. */
+    overflow-wrap: break-word;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  /* A visible focus indicator for every focusable element. */
+  :focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  /* Links are underlined so they are not told apart by colour alone.
+     Components that style a link as a button or heading turn this off. */
+  a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}
