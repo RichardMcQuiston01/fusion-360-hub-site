@@ -1,0 +1,5 @@
+# Keep the contact form's settings (which hold the SendGrid key) from ever being
+# served, even if the file is requested directly.
+<FilesMatch "^contact-config(\.example)?\.php$">
+  Require all denied
+</FilesMatch>
