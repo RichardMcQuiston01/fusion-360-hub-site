@@ -1,27 +1,49 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { addins } from '../data/addins';
+import Catalog from '../components/Catalog.astro';
+import { addins, groups } from '../data/addins';
+import type { CatalogItem } from '@richardmcquiston01/custom-catalog-component';
+
+const items: CatalogItem[] = addins.map((addin) => ({
+  id: addin.slug,
+  title: addin.name,
+  summary: addin.tagline,
+  href: `/${addin.slug}/`,
+  group: addin.group,
+  badge: addin.pricing === 'free' ? 'Free' : 'Paid',
+  facets: { price: addin.pricing },
+  searchText: [
+    addin.name,
+    addin.tagline,
+    addin.description,
+    ...addin.features,
+  ].join(' '),
+  addedOn: addin.addedOn,
+}));
 ---
 
 <BaseLayout title="Fusion 360 Generators">
-  <h1 class="text-3xl font-bold text-slate-900">Fusion 360 Generators</h1>
-  <p class="mt-3 max-w-2xl text-lg text-slate-600">
+  <h1 class="text-4xl text-ink">Fusion 360 Generators</h1>
+  <p class="mt-3 max-w-2xl text-lg text-muted">
     Add-ins for Autodesk Fusion that draw ready-to-cut sketches for laser
     cutters, CNC routers and 3D printers. Windows only for now.
   </p>
-  <ul class="mt-8 grid gap-4 sm:grid-cols-2">
-    {addins.map((addin) => (
-      <li class="rounded border border-slate-200 p-5">
-        <h2 class="text-xl font-semibold text-slate-900">
-          <a class="hover:underline" href={`/${addin.slug}`}>
-            {addin.name}
-          </a>
-        </h2>
-        <p class="mt-1 text-sm uppercase tracking-wide text-slate-500">
-          {addin.pricing === 'free' ? 'Free' : 'Paid'}
-        </p>
-        <p class="mt-2 text-slate-600">{addin.tagline}</p>
-      </li>
-    ))}
-  </ul>
+  <div class="mt-10">
+    <Catalog
+      items={items}
+      groups={groups}
+      facets={[
+        {
+          key: 'price',
+          label: 'Price',
+          options: [
+            { value: 'free', label: 'Free' },
+            { value: 'paid', label: 'Paid' },
+          ],
+        },
+      ]}
+      noun={{ singular: 'add-in', plural: 'add-ins' }}
+      searchLabel="Search add-ins"
+    />
+  </div>
 </BaseLayout>

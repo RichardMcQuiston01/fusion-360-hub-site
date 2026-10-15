@@ -1,8 +1,80 @@
 export type AddinPricing = 'free' | 'paid';
 
+export type GroupSlug =
+  | 'laser-cutting'
+  | 'text-and-signs'
+  | 'games-and-puzzles'
+  | 'holidays'
+  | 'home-and-garden'
+  | 'organization'
+  | 'electronics'
+  | 'jewelry-and-accessories'
+  | 'calibration';
+
+export interface AddinGroup {
+  slug: GroupSlug;
+  name: string;
+  description: string;
+}
+
+/**
+ * Display order of the groups on the home page. A group with no add-ins is not
+ * shown, so groups can be defined here before anything is assigned to them.
+ */
+export const groups: AddinGroup[] = [
+  {
+    slug: 'laser-cutting',
+    name: 'Laser cutting',
+    description: 'Patterns and parts that are ready to cut.',
+  },
+  {
+    slug: 'text-and-signs',
+    name: 'Text and signs',
+    description: 'Lettering, stencils and signs.',
+  },
+  {
+    slug: 'games-and-puzzles',
+    name: 'Games and puzzles',
+    description: 'Puzzles, game pieces and things to play with.',
+  },
+  {
+    slug: 'holidays',
+    name: 'Holidays',
+    description: 'Ornaments, decorations and seasonal pieces.',
+  },
+  {
+    slug: 'home-and-garden',
+    name: 'Home and garden',
+    description: 'Decor, plant markers and things for around the house.',
+  },
+  {
+    slug: 'organization',
+    name: 'Organization',
+    description: 'Trays, dividers and organizers.',
+  },
+  {
+    slug: 'electronics',
+    name: 'Electronics',
+    description: 'Stands, enclosures and mounts for devices.',
+  },
+  {
+    slug: 'jewelry-and-accessories',
+    name: 'Jewelry and accessories',
+    description: 'Earrings, tags, keychains and wearables.',
+  },
+  {
+    slug: 'calibration',
+    name: 'Calibration and testing',
+    description: 'Gauges for dialling in your machine and material.',
+  },
+];
+
 export interface Addin {
   slug: string;
   name: string;
+  group: GroupSlug;
+  /** Date the add-in was added to this site (YYYY-MM-DD). */
+  addedOn: string;
   tagline: string;
   description: string;
   pricing: AddinPricing;
@@ -17,6 +89,8 @@ export const addins: Addin[] = [
   {
     slug: 'living-hinge',
     name: 'Living Hinge',
+    group: 'laser-cutting',
+    addedOn: '2026-10-14',
     tagline: 'Draw a living-hinge (kerf-bend) slit pattern as a Fusion sketch.',
     description:
       'A living hinge lets rigid sheet material such as plywood, MDF or acrylic bend along one direction. The cuts are a staggered lattice of short slits. Living Hinge draws that lattice for you as a sketch on the XY plane, ready to laser cut.',
@@ -43,6 +117,8 @@ export const addins: Addin[] = [
   {
     slug: 'kerf-test',
     name: 'Kerf Test',
+    group: 'calibration',
+    addedOn: '2026-10-14',
     tagline: 'Draw laser kerf test gauges so your joints and slots fit.',
     description:
       'Kerf is the width of material your laser removes. Kerf Test draws two gauges that let you measure it: a slot gauge and a kerf comb. Each is drawn as a cut sketch and an engrave sketch, so you can run them as separate laser layers.',
@@ -70,4 +146,22 @@ export const addins: Addin[] = [
 
 export function getAddin(slug: string): Addin | undefined {
   return addins.find((addin) => addin.slug === slug);
+}
+
+export function getGroup(slug: GroupSlug): AddinGroup {
+  const group = groups.find((candidate) => candidate.slug === slug);
+  if (!group) {
+    throw new Error(`Unknown add-in group "${slug}" in src/data/addins.ts.`);
+  }
+  return group;
+}
+
+/** The groups that have at least one add-in, each with its add-ins. */
+export function getGroupedAddins(): { group: AddinGroup; addins: Addin[] }[] {
+  return groups
+    .map((group) => ({
+      group,
+      addins: addins.filter((addin) => addin.group === group.slug),
+    }))
+    .filter((entry) => entry.addins.length > 0);
 }

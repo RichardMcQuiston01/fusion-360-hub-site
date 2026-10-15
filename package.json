@@ -12,6 +12,10 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource/barlow-semi-condensed": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "@richardmcquiston01/custom-catalog-component": "^0.1.0",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.8",
     "tailwindcss": "^4.3.3"
