@@ -4,12 +4,16 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  /** Structured data (schema.org) to embed on the page. */
+  jsonLd?: Record<string, unknown>;
 }
 
 const {
   title,
   description = 'Fusion 360 add-ins for laser cutters, CNC routers and 3D printers.',
+  jsonLd,
 } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
 const year = new Date().getFullYear();
 ---
 
@@ -20,6 +24,14 @@ const year = new Date().getFullYear();
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    {jsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
   </head>
   <body class="min-h-screen bg-white text-slate-800 antialiased">
     <header class="border-b border-slate-200">
