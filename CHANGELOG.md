@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Contact Us now sends a real message: the form posts to `public/api/contact.php`,
+  which emails it through SendGrid (see `docs/contact-form.md`). The form gained
+  Your Name and Your Email fields so we can reply.
+- Renamed Support to Contact Us (`/contact/`, with `/support/` redirecting). It
+  has a form that builds a `mailto:` link; Select Product shows for Product
+  Support. The Accessibility page links to it.
 - Added the Astro and Tailwind site: a hub page, a page for Living Hinge and
   Kerf Test, and support and privacy pages.
 - Added the "Workshop" colour palette and fonts (Barlow Semi Condensed, Inter,

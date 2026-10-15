@@ -36,6 +36,11 @@ credentials, and never deploy from a branch other than `main`. The server does
 not support FTPS, so the connection is unencrypted; the FTP account is limited
 to the `fusion360` folder to keep that acceptable.
 
+The Contact Us form posts to `public/api/contact.php` (PHP, so it runs only on
+the server; `bun run dev` does not run it). Its SendGrid key lives in
+`contact-config.php` in the server's site folder, created by hand and never
+committed or deployed. See `docs/contact-form.md`.
+
 ## Design and accessibility
 
 - Colours and fonts come from `BRANDING.md` and are theme variables in
