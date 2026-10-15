@@ -1,0 +1,54 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StoreButton from '../components/StoreButton.astro';
+import { addins } from '../data/addins';
+
+export const getStaticPaths = (() =>
+  addins.map((addin) => ({
+    params: { slug: addin.slug },
+    props: { addin },
+  }))) satisfies GetStaticPaths;
+
+const { addin } = Astro.props;
+---
+
+<BaseLayout title={`${addin.name} for Fusion 360`} description={addin.tagline}>
+  <p class="text-sm">
+    <a class="underline" href="/">
+      All add-ins
+    </a>
+  </p>
+  <h1 class="mt-3 text-3xl font-bold text-slate-900">{addin.name}</h1>
+  <p class="mt-1 text-sm uppercase tracking-wide text-slate-500">
+    {addin.pricing === 'free' ? 'Free, with no limitations' : 'Paid'}
+  </p>
+  <p class="mt-4 max-w-2xl text-lg text-slate-600">{addin.description}</p>
+  <div class="mt-6">
+    <StoreButton storeUrl={addin.storeUrl} />
+  </div>
+
+  <h2 class="mt-10 text-xl font-semibold text-slate-900">Features</h2>
+  <ul class="mt-2 list-disc space-y-1 pl-6">
+    {addin.features.map((feature) => (
+      <li>{feature}</li>
+    ))}
+  </ul>
+
+  <h2 class="mt-10 text-xl font-semibold text-slate-900">How to use it</h2>
+  <ol class="mt-2 list-decimal space-y-1 pl-6">
+    {addin.howToUse.map((step) => (
+      <li>{step}</li>
+    ))}
+  </ol>
+
+  <h2 class="mt-10 text-xl font-semibold text-slate-900">Tips</h2>
+  <ul class="mt-2 list-disc space-y-1 pl-6">
+    {addin.tips.map((tip) => (
+      <li>{tip}</li>
+    ))}
+  </ul>
+
+  <h2 class="mt-10 text-xl font-semibold text-slate-900">Requirements</h2>
+  <p class="mt-2">Autodesk Fusion on Windows.</p>
+</BaseLayout>
