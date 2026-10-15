@@ -17,11 +17,23 @@ Hub Site with information and links to the various Fusion 360 Addins on the Auto
 
 ### Prerequisites
 
+[Bun](https://bun.sh/) 1.1 or later.
+
 ### Installation
+
+```sh
+bun install
+```
 
 ### Usage
 
-### Examples
+```sh
+bun run dev      # start the dev server
+bun run build    # type-check and build to dist/
+bun run preview  # preview the build
+```
+
+Add or edit an add-in's page in `src/data/addins.ts`.
 
 [Back to Top](#table-of-contents)
 
