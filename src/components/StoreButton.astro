@@ -9,12 +9,12 @@ const { storeUrl } = Astro.props;
 {storeUrl ? (
   <a
     href={storeUrl}
-    class="inline-block rounded bg-slate-900 px-4 py-2 text-white hover:bg-slate-700"
+    class="inline-block rounded-md bg-accent px-5 py-3 font-semibold text-white no-underline hover:bg-ink"
   >
     Get it on the Autodesk App Store
   </a>
 ) : (
-  <span class="inline-block rounded border border-slate-300 px-4 py-2 text-slate-600">
+  <span class="inline-block rounded-md border border-control bg-surface px-5 py-3 font-medium text-ink">
     Coming soon to the Autodesk App Store
   </span>
 )}

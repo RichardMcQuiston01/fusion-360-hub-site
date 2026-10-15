@@ -36,6 +36,21 @@ credentials, and never deploy from a branch other than `main`. The server does
 not support FTPS, so the connection is unencrypted; the FTP account is limited
 to the `fusion360` folder to keep that acceptable.
 
+## Design and accessibility
+
+- Colours and fonts come from `BRANDING.md` and are theme variables in
+  `src/styles/global.css`. Use the tokens (`bg-paper`, `text-ink`, `text-muted`,
+  `text-accent`, `border-border`, `border-control`), not raw colours.
+- The site targets WCAG 2.2 level AA. Text needs 4.5:1 contrast and UI parts 3:1;
+  input borders use `border-control`, not `border-border`. Keep a visible focus
+  outline, underline links in text, give every control a label, keep targets at
+  least 24 by 24 px, and respect reduced motion.
+- The catalog view lives in `src/components/catalog` and `src/scripts/catalog.ts`.
+  It is data-driven (`src/lib/catalog.ts`) and meant to move into the
+  `catalog-component` NPM package. Keep it free of add-in specifics.
+- Check changes with axe-core and keyboard testing before merging, and test at
+  320 px width.
+
 ## Content rules
 
 - Free add-ins must be described as free with no limitations.

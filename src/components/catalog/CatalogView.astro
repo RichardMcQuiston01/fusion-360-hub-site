@@ -1,0 +1,107 @@
+---
+import CatalogFilters from './CatalogFilters.astro';
+import CatalogGroupSection from './CatalogGroupSection.astro';
+import ViewToggle from './ViewToggle.astro';
+import {
+  groupCatalogItems,
+  type CatalogFacet,
+  type CatalogGroup,
+  type CatalogItem,
+  type CatalogViewName,
+} from '../../lib/catalog';
+
+interface Props {
+  items: CatalogItem[];
+  groups: CatalogGroup[];
+  /** Filters other than the built-in group filter. */
+  facets: CatalogFacet[];
+  /** What the items are called, for the results message. */
+  noun: { singular: string; plural: string };
+  searchLabel?: string;
+  defaultView?: CatalogViewName;
+  /**
+   * With fewer items than this, the search and filters sit in a toolbar above
+   * the results. At or above it, they get a left-hand column on wide screens.
+   */
+  sidebarMinItems?: number;
+  /** Prefix for element ids, so several catalogs can share a page. */
+  idPrefix?: string;
+}
+
+const {
+  items,
+  groups,
+  facets,
+  noun,
+  searchLabel = 'Search',
+  defaultView = 'carousel',
+  sidebarMinItems = 8,
+  idPrefix = 'catalog',
+} = Astro.props;
+
+const layout = items.length >= sidebarMinItems ? 'sidebar' : 'toolbar';
+const grouped = groupCatalogItems(groups, items);
+---
+
+<div
+  data-catalog
+  data-layout={layout}
+  data-view={defaultView}
+  data-default-view={defaultView}
+  data-noun-singular={noun.singular}
+  data-noun-plural={noun.plural}
+  class="group/catalog"
+>
+  <div class="group-data-[layout=sidebar]/catalog:lg:grid group-data-[layout=sidebar]/catalog:lg:grid-cols-[16rem_minmax(0,1fr)] group-data-[layout=sidebar]/catalog:lg:gap-10">
+    <aside
+      aria-label={`${searchLabel} and filters`}
+      class="mb-8 group-data-[layout=sidebar]/catalog:lg:mb-0"
+    >
+      <CatalogFilters
+        idPrefix={idPrefix}
+        facets={facets}
+        groups={groups}
+        items={items}
+        searchLabel={searchLabel}
+      />
+    </aside>
+
+    <div class="min-w-0">
+      <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+        <p
+          role="status"
+          aria-live="polite"
+          data-catalog-status
+          class="text-sm font-medium text-muted"
+        >
+          {items.length}
+          {items.length === 1 ? noun.singular : noun.plural} shown
+        </p>
+        <ViewToggle idPrefix={idPrefix} defaultView={defaultView} />
+      </div>
+
+      <div data-catalog-results>
+        {grouped.map(({ group, items: groupItems }) => (
+          <CatalogGroupSection
+            group={group}
+            items={groupItems}
+            idPrefix={idPrefix}
+          />
+        ))}
+      </div>
+
+      <p
+        data-catalog-empty
+        hidden
+        class="rounded-lg border border-border bg-surface p-6 text-ink"
+      >
+        No {noun.plural} match your search and filters. Try fewer words, or use
+        the "Clear search and filters" button.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  import '../../scripts/catalog';
+</script>

@@ -73,6 +73,8 @@ export interface Addin {
   slug: string;
   name: string;
   group: GroupSlug;
+  /** Date the add-in was added to this site (YYYY-MM-DD). */
+  addedOn: string;
   tagline: string;
   description: string;
   pricing: AddinPricing;
@@ -88,6 +90,7 @@ export const addins: Addin[] = [
     slug: 'living-hinge',
     name: 'Living Hinge',
     group: 'laser-cutting',
+    addedOn: '2026-10-14',
     tagline: 'Draw a living-hinge (kerf-bend) slit pattern as a Fusion sketch.',
     description:
       'A living hinge lets rigid sheet material such as plywood, MDF or acrylic bend along one direction. The cuts are a staggered lattice of short slits. Living Hinge draws that lattice for you as a sketch on the XY plane, ready to laser cut.',
@@ -115,6 +118,7 @@ export const addins: Addin[] = [
     slug: 'kerf-test',
     name: 'Kerf Test',
     group: 'calibration',
+    addedOn: '2026-10-14',
     tagline: 'Draw laser kerf test gauges so your joints and slots fit.',
     description:
       'Kerf is the width of material your laser removes. Kerf Test draws two gauges that let you measure it: a slot gauge and a kerf comb. Each is drawn as a cut sketch and an engrave sketch, so you can run them as separate laser layers.',

@@ -1,0 +1,58 @@
+---
+import CatalogCard from './CatalogCard.astro';
+import type { CatalogGroup, CatalogItem } from '../../lib/catalog';
+
+interface Props {
+  group: CatalogGroup;
+  items: CatalogItem[];
+  idPrefix: string;
+}
+
+const { group, items, idPrefix } = Astro.props;
+const headingId = `${idPrefix}-heading-${group.slug}`;
+---
+
+<section
+  id={group.slug}
+  aria-labelledby={headingId}
+  data-catalog-group
+  class="mt-10 scroll-mt-6 first:mt-0"
+>
+  <div class="flex items-end justify-between gap-4">
+    <div>
+      <h2 id={headingId} class="text-2xl text-ink">
+        {group.name}
+      </h2>
+      <p class="mt-1 text-sm text-muted">{group.description}</p>
+    </div>
+    <div class="hidden gap-2" data-carousel-controls>
+      <button
+        type="button"
+        class="min-h-10 min-w-10 rounded border border-control bg-surface px-3 py-1 text-ink hover:bg-accent-tint disabled:opacity-40"
+        data-carousel-prev
+        aria-label={`Scroll ${group.name} back`}
+      >
+        <span aria-hidden="true">&larr;</span>
+      </button>
+      <button
+        type="button"
+        class="min-h-10 min-w-10 rounded border border-control bg-surface px-3 py-1 text-ink hover:bg-accent-tint disabled:opacity-40"
+        data-carousel-next
+        aria-label={`Scroll ${group.name} forward`}
+      >
+        <span aria-hidden="true">&rarr;</span>
+      </button>
+    </div>
+  </div>
+  <ul
+    role="list"
+    data-catalog-list
+    tabindex="0"
+    aria-label={`${group.name}`}
+    class="mt-4 flex flex-col gap-4 group-data-[view=carousel]/catalog:snap-x group-data-[view=carousel]/catalog:snap-mandatory group-data-[view=carousel]/catalog:flex-row group-data-[view=carousel]/catalog:overflow-x-auto group-data-[view=carousel]/catalog:pb-2 group-data-[view=grid]/catalog:grid group-data-[view=grid]/catalog:grid-cols-[repeat(auto-fill,minmax(16rem,1fr))]"
+  >
+    {items.map((item) => (
+      <CatalogCard item={item} />
+    ))}
+  </ul>
+</section>

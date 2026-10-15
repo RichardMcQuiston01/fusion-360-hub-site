@@ -1,0 +1,32 @@
+---
+import { CATALOG_VIEWS, type CatalogViewName } from '../../lib/catalog';
+
+interface Props {
+  idPrefix: string;
+  defaultView: CatalogViewName;
+}
+
+const { idPrefix, defaultView } = Astro.props;
+---
+
+<fieldset class="m-0 min-w-0 border-0 p-0">
+  <legend class="mb-1 text-sm font-semibold text-ink">View</legend>
+  <div class="inline-flex overflow-hidden rounded-md border border-control">
+    {CATALOG_VIEWS.map((view) => (
+      <label class="group/opt flex min-h-10 cursor-pointer items-center gap-1 border-l border-control bg-surface px-3 text-sm font-medium text-ink first:border-l-0 has-[:checked]:bg-accent has-[:checked]:text-white has-[:focus-visible]:outline has-[:focus-visible]:outline-[3px] has-[:focus-visible]:-outline-offset-[3px] has-[:focus-visible]:outline-focus hover:bg-accent-tint has-[:checked]:hover:bg-accent">
+        <input
+          class="sr-only"
+          type="radio"
+          name={`${idPrefix}-view`}
+          value={view.value}
+          data-catalog-view
+          checked={view.value === defaultView}
+        />
+        <span aria-hidden="true" class="hidden group-has-[:checked]/opt:inline">
+          &#10003;
+        </span>
+        {view.label}
+      </label>
+    ))}
+  </div>
+</fieldset>
