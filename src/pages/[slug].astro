@@ -1,8 +1,8 @@
 ---
 import type { GetStaticPaths } from 'astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import StoreButton from '../../components/StoreButton.astro';
-import { addins } from '../../data/addins';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StoreButton from '../components/StoreButton.astro';
+import { addins } from '../data/addins';
 
 export const getStaticPaths = (() =>
   addins.map((addin) => ({

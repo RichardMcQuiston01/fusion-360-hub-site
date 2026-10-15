@@ -6,7 +6,10 @@ Guidance for Claude Code when working in this repository.
 
 Static hub site for the Fusion 360 add-ins, built with Astro and Tailwind CSS.
 Each add-in's page is generated from `src/data/addins.ts`. The add-ins
-themselves live in `RichardMcQuiston01/fusion-360-generator`.
+themselves live in `RichardMcQuiston01/fusion-360-generator`. The site is served
+from `https://fusion360.hiredhandhq.com`, with each add-in at `/<slug>` (for
+example `/living-hinge`). Those URLs are in the add-ins' `bundle.json` files and
+store listings, so do not change a slug without updating them.
 
 ## Development workflow
 
