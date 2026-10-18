@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added Stencil Text and Jigsaw Puzzle to the add-ins list, each with its own page,
+  both marked Paid and not yet on the Autodesk App Store.
 - The Show filters and Clear search and filters buttons on the hub page show an
   icon beside their text (`buttons={{ display: 'icon-text' }}`).
 - The hub page always uses the two-column layout (search, sort and filters on the
