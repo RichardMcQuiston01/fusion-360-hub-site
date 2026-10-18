@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- The Show filters and Clear search and filters buttons on the hub page show an
+  icon beside their text (`buttons={{ display: 'icon-text' }}`).
 - The hub page always uses the two-column layout (search, sort and filters on the
   left, results on the right on wide screens), even with few add-ins, by passing
   `layout="split"` to the catalog (package 0.2.0).
