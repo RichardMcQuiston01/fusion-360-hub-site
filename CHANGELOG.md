@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- The hub page always uses the two-column layout (search, sort and filters on the
+  left, results on the right on wide screens), even with few add-ins, by passing
+  `layout="split"` to the catalog (package 0.2.0).
 - Contact Us now sends a real message: the form posts to `public/api/contact.php`,
   which emails it through SendGrid (see `docs/contact-form.md`). The form gained
   Your Name and Your Email fields so we can reply.
