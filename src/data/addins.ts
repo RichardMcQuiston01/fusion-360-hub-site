@@ -142,6 +142,64 @@ export const addins: Addin[] = [
       'Kerf comb: push the bars to one side and measure the gap. Kerf = gap / (bars + 1).',
     ],
   },
+  {
+    slug: 'stencil-text',
+    name: 'Stencil Text',
+    group: 'text-and-signs',
+    addedOn: '2026-10-18',
+    tagline: 'Turn text into a stencil plate, with the bridges already in.',
+    description:
+      'Letters with an enclosed centre, such as the middle of an O, A or B, would fall out of a stencil. Stencil Text ties each centre back to the plate with a bridge, a strip of plate left across the letter. You get the text and plate as sketches, and a stencil body with the letters cut through it.',
+    pricing: 'paid',
+    storeUrl: null,
+    features: [
+      'Type your text, one line per row, and set its size',
+      'Bridges across every enclosed letter centre, with a width you choose',
+      'Choose the bridge direction, plate margin, corner radius and thickness',
+      'Adds a Stencil text sketch, a Stencil plate sketch and a Stencil body',
+      'Optional DXF of the cut lines, never overwriting an existing file',
+    ],
+    howToUse: [
+      'Open Utilities, then Scripts and Add-Ins, and run Stencil Text.',
+      'Type your text and set the size, bridge width and direction, plate margin, corner radius and thickness.',
+      'Click OK. The sketches and the Stencil body are added.',
+      'Leave Save DXF after drawing ticked to also save the cut lines for your laser or cutter.',
+    ],
+    tips: [
+      'Wider bridges make a stronger stencil but cover more of each letter. Try a few widths on scrap.',
+      'Values outside the allowed limits are adjusted to the nearest limit.',
+      'Fusion sets the font, line spacing and letter spacing, through its sketch text tool.',
+    ],
+  },
+  {
+    slug: 'jigsaw-puzzle',
+    name: 'Jigsaw Puzzle',
+    group: 'games-and-puzzles',
+    addedOn: '2026-10-18',
+    tagline: 'Draw a rectangular jigsaw puzzle with interlocking tabs.',
+    description:
+      'Jigsaw Puzzle draws a flat rectangular puzzle as a sketch: an outer cut border plus every interior piece edge. Each interior edge carries a round knob tab that is narrower at the neck than at the bulb, so neighbouring pieces lock together.',
+    pricing: 'paid',
+    storeUrl: null,
+    features: [
+      'Set the overall size and the pieces across and down, from 2 to 40 each way',
+      'Choose the tab size',
+      'A seed picks which way each tab points, so the same seed gives the same puzzle',
+      'Knobs are true circular arcs, for a smooth cut',
+      'Optional DXF, never overwriting an existing file',
+    ],
+    howToUse: [
+      'Open Utilities, then Scripts and Add-Ins, and run Jigsaw Puzzle.',
+      'Set the overall size, the pieces across and down, the tab size and a seed.',
+      'Click OK. A Jigsaw puzzle sketch is added on the XY plane.',
+      'Leave Save DXF after drawing ticked to also save a DXF for your laser software.',
+    ],
+    tips: [
+      'Keep the seed to get the same puzzle again. Change it for a different tab layout.',
+      'The tab size is a fraction of the smaller piece side, from 0.08 to 0.3. It is also limited so a knob never reaches the next grid line.',
+      'The puzzle is a flat sketch. For 3D pieces, extrude the piece profiles in Fusion.',
+    ],
+  },
 ];
 
 export function getAddin(slug: string): Addin | undefined {
